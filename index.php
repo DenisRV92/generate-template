@@ -2,15 +2,15 @@
 
 class HtmlGenerator
 {
-    private $dataTexts;
-    private $dataHtml;
-    private $langs = ['Отпуск' => 'vacation', 'Путь' => 'way'];
+    private array $dataTexts;
+    private array $dataHtml;
+    private array $langs = ['Отпуск' => 'vacation', 'Путь' => 'way'];
 
     /**
      * @param $dataTexts
      * @param $dataHtml
      */
-    public function __construct($dataTexts, $dataHtml)
+    public function __construct(array $dataTexts, array $dataHtml)
     {
         $this->dataTexts = $dataTexts;
         $this->dataHtml = $dataHtml;
@@ -31,8 +31,8 @@ class HtmlGenerator
             foreach ($this->langs as $key => $lang) {
                 if (isset($this->dataTexts[$key][$i]) && isset($this->dataHtml[$lang][$i])) {
                     $text = $this->dataTexts[$key][$i];
-                    $template = $this->dataHtml[$lang][$i];
-                    $html .= $this->replaceTemplate($template, $text);
+                    $tag = $this->dataHtml[$lang][$i];
+                    $html .= $this->replaceTagContent($tag, $text);
                 }
             }
         }
@@ -46,9 +46,9 @@ class HtmlGenerator
      * @param $text
      * @return string
      */
-    private function replaceTemplate($template, $text): string
+    private function replaceTagContent(string $tag, string $text): string
     {
-        return str_replace('><', '>' . $text . '<', $template);
+        return str_replace('><', '>' . $text . '<', $tag);
     }
 }
 
